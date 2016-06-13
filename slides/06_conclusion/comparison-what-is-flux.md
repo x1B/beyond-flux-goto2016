@@ -5,14 +5,14 @@
 
 > "I define Flux as 'unidirectional data flow with changes described as plain objects'."
 >
-> ([Dan Abramov](https://twitter.com/dan_abramov/status/616270976913903616), Autor von Redux)
+> ([Dan Abramov](https://twitter.com/dan_abramov/status/616270976913903616), Author of Redux)
 
 <p>&nbsp;</p>
 
 
 > "It's cool that you are inventing a better Flux by not doing Flux at all."
 >
-> ([André Staltz](https://twitter.com/andrestaltz/status/616271392930201604), Autor von Cycle.js)
+> ([André Staltz](https://twitter.com/andrestaltz/status/616271392930201604), Author of Cycle.js)
 
 
 
