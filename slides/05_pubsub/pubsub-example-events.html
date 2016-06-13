@@ -1,0 +1,56 @@
+<h3 class="lower-right-headline">PubSub (LaxarJS) - Example - Events</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+ {
+     "widget": "product-list-view",
+     "features": {
+         "addToCart": { "action": "add-to-cart" },
+         "products": { "resource": "product-list" }
+     }
+ },
+ {
+     "widget": "shopping-cart-view",
+     "features": { ... }
+ },
+ {
+     "widget": "products-activity",
+     "features": {
+         "products": { "resource": "product-list" },
+         "decrementInventory": { "onActions": ["add-to-cart"] }
+     }
+ },
+ {
+     "widget": "shopping-cart-activity",
+     "features": { ... }
+ }
+</script>
+
+<div class="minimap">
+    <img src="slides/05_pubsub/images/pub-sub-topics-small-inverse-events.svg">
+</div>
+
+
+<div class="slide-comment">
+- the components are *loosely coupled* allowing for wiring at configuration time
+  - in order to connect them, their source code does not need to be touched
+
+- declarative JSON wiring allows to statically reason about the connections
+
+- connections are formed by specifying a common topic for features of view- and
+  activity components
+
+- actions may be triggered by multiple sources,
+  resources always have exactly one *owner*-activity.
+
+- There are tools that use this information to produce a graphical overview
+  of your application.
+</div>
+
+<aside class="notes">
+    <ul>
+        <li>JSON-Seitenkonfiguration</li>
+        <li>Deklarative Zuordnung von Kollaborateuren</li>
+        <li>Statisch, aber beliebig erweiterbar (z.B. 2 shopping-carts)</li>
+    </ul>
+</aside>

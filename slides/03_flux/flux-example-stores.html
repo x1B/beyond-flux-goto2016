@@ -1,0 +1,61 @@
+<h3 class="lower-right-headline">Flux - Example - Stores</h3>
+
+<div class="minimap">
+   <img src="slides/03_flux/images/flux-overview-small-inverse-stores.svg">
+</div>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+var createStore = require('fluxible/addons/createStore');
+var ProductStore = createStore({
+    storeName: 'ProductStore',
+    initialize: function () {
+        this._products = [];
+    },
+
+    handlers: {
+        'ADD_TO_CART': 'decreaseInventory',
+        'RECEIVE_PRODUCTS': 'handleReceive'
+    },
+
+    handleReceive: function (payload) {
+        this._products = payload.products;
+        this.emitChange();
+    },
+
+    decreaseInventory: function (payload) {
+        this.dispatcher.waitFor('CartStore', function() {
+            var product = payload.product;
+            product.inventory = Math.max(product.inventory-1, 0);
+            this.emitChange();
+        });
+    },
+
+    getAllProducts: function () { return this._products; }
+});
+module.exports = ProductStore;
+</script>
+
+
+<div class="slide-comment">
+ - Stores manage their "slice" of the application state, and handle any action
+   that might need to modify "their" state.
+ - Stores may access the dispatcher, but not to dispatch actions themselves
+   (unidirectional flow). Instead they may ask the dispatcher to "wait" for
+   another store before proceeding with handling an action.
+ - Stores may also *query* other stores
+
+ - Fluxible uses a handler-registry, other implementations use a (long)
+   switch/case-statement.
+
+ - 'ADD_TO_CART': Product being modified in-place, as this product instance
+   may already have been overwritten, e.g. by handleReceive.
+</div>
+<aside class="notes">
+    <ul>
+        <li>Stores</li>
+        <li>handlers vs. switch/case</li>
+        <li>Antipattern: mutable state in actions</li>
+        <li>waitFor, getStore - problematisch bzgl. Kapselung!</li>
+     </ul>
+</aside>

@@ -1,0 +1,42 @@
+<h3 class="lower-right-headline">PubSub (LaxarJS) - Example - Activity Component (1/2)</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+import ax from 'laxar';
+import patterns from 'laxar-patterns';
+import shop from '../../../api';
+
+const injections = ['axContext'];
+function create(context) {
+    let products = [];
+    const replaceProducts =
+        patterns.resources.replacePublisherForFeature(context, 'products');
+
+    context.eventBus.subscribe('beginLifecycleRequest', () => {
+        shop.getProducts(list => {
+            products = list;
+            replaceProducts(products);
+        });
+    });
+
+    // ... action handling (next) ...
+}
+
+export default {
+    name: 'products-activity',
+    injections: injections,
+    create: create
+};
+</script>
+
+<div class="minimap">
+    <img src="slides/05_pubsub/images/pub-sub-topics-small-inverse-activities.svg">
+</div>
+
+
+<div class="slide-comment">
+- Activity component keeps state (similar to a Flux store), and defines its own initial state
+- patterns helper library is again used, to publish state
+- once *beginLifecycleRequest* has been received, the initial state is published
+- no knowledge about if/what view components are listening
+</div>

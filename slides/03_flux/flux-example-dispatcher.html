@@ -1,0 +1,37 @@
+<h3 class="lower-right-headline">Flux - Example - Dispatcher</h3>
+
+<div class="minimap">
+   <img src="slides/03_flux/images/flux-overview-small-inverse-dispatcher.svg">
+</div>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+var Fluxible = require('fluxible');
+var CartStore = require('./stores/CartStore');
+var ProductStore = require('./stores/ProductStore');
+
+var app = new Fluxible();
+app.registerStore(CartStore);
+app.registerStore(ProductStore);
+
+
+var view = require('./view')
+var receiveProducts = require('./actions/receiveProducts');
+var context = app.createContext();
+context.executeAction(receiveProducts, {}, function (err) {
+    if (err) {
+        throw err;
+    }
+    return view.render(context);
+});
+</script>
+
+
+<div class="slide-comment">
+ - Dispatcher: part of the framework, works out-of-the-box, no need to view
+   source here.
+ - Instead, let's have a quick look at the "main" routine,
+   the code that actually initializes the appliction.
+ - It loads and registers stores, then creates and dispatches the
+   receiveProducts action.
+</div>

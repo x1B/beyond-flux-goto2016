@@ -1,0 +1,50 @@
+<h3 class="lower-right-headline">PubSub (LaxarJS) - Example - View Component (1/2)</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+import React from 'react';
+import patterns from 'laxar-patterns';
+
+const injections = ['axContext', 'axReactRender'];
+function create(context, reactRender) {
+
+    patterns.resources.handlerFor(context)
+        .registerResourceFromFeature('products', render);
+
+    function render() {
+        reactRender(<ul>
+            {(context.resources.products || []).map(product =>
+                <li>
+                    <img src={product.image}/>
+                    {product.title} - {product.price}€
+                    <button onClick={() => addToCart(product)}
+                            disabled={product.inventory === 0}>add</button>
+                </li>
+            )}
+        </ul>);
+    }
+
+    // ... addToCart ...
+</script>
+
+<div class="minimap">
+    <img src="slides/05_pubsub/images/pub-sub-topics-small-inverse-view.svg">
+</div>
+
+
+<div class="slide-comment">
+- Here we use a pub/sub framework (*LaxarJS*) built in-house, then open-sourced
+
+- Each of our view/activity components is a JS module
+  - *No dependencies* to other components!
+  - *Injections:* like AngularJS
+
+- *view component*
+  - the product list is received through a *resource*
+  - the *patterns* helper library talks to the event bus for us
+    - it subscribes to topic that was *configured for the products feature* of the component
+    - it puts the current resource state under *context.resources*
+
+- *render method* very similar to that of Flux/Redux
+  - uses an indirection (axReactRender) because LaxarJS knows where to put the render results
+</div>

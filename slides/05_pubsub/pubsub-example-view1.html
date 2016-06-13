@@ -1,0 +1,45 @@
+<h3 class="lower-right-headline">PubSub (LaxarJS) - Example - View Component (2/2)</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+import React from 'react';
+import patterns from 'laxar-patterns';
+
+const injections = ['axContext', 'axReactRender'];
+function create(context, reactRender) {
+
+    // ... render ...
+
+    const addToCartPublisher =
+        patterns.actions.publisherForFeature(context, 'addToCart')
+
+    function addToCart(product) {
+        if(product.inventory > 0) {
+            addToCartPublisher({ product: product });
+        }
+    }
+
+    return { onDomAvailable: render };
+}
+
+export default {
+    name: 'product-list-view',
+    injections: injections,
+    create: create
+};
+</script>
+
+<div class="minimap">
+    <img src="slides/05_pubsub/images/pub-sub-topics-small-inverse-view.svg">
+</div>
+
+
+<div class="slide-comment">
+- Actions also triggered through a helper library
+  - we do not know if/who will deal with the action
+  - local validation happens in the view component
+- Any of the processing activities may signal failure
+  - error/completion is communicated through the promise,
+    but this is directly traceable to response events.
+- `onDomAvailable` triggers the initial render.
+</div>

@@ -1,0 +1,53 @@
+<h3 class="lower-right-headline">Flux - Example - View (2/3)</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+var React = require('react');
+var FluxibleMixin = require('fluxible').FluxibleMixin;
+var ProductStore = require('./stores/ProductStore');
+var addToCart = require('./actions/addToCart');
+
+var Products = React.createClass({
+
+    // ...render, addToCart...
+
+    getInitialState: function() {
+        return this._getStateFromStores();
+    },
+
+    _getStateFromStores: function() {
+        return {
+           products: this.getStore(ProductStore).getAllProducts()
+        };
+    },
+
+    statics: {
+        storeListeners: {
+            _onChange: [ProductStore]
+        }
+    },
+
+    _onChange: function() {
+        this.setState(this._getStateFromStores());
+    }
+});
+</script>
+
+<div class="minimap">
+   <img src="slides/03_flux/images/flux-overview-small-inverse-view.svg">
+</div>
+
+
+<div class="slide-comment">
+ - *Boilerplate:* component needs to query stores for initial state,
+   and register a listener to be notified about future changes.
+ - Note that the view component is coupled to its store by class name,
+   and by using the getAllProducts query offered by the store.
+</div>
+<aside class="notes">
+    <ul>
+        <li>Produkt-Komponente: Auflisten, Add-to-Cart</li>
+        <li>Rendern von this.state.products</li>
+        <li>Auslösen der Aktion *addToCart*</li>
+     </ul>
+</aside>

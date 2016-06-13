@@ -1,0 +1,41 @@
+<h3 class="lower-right-headline">PubSub (LaxarJS) - Example - Activity Component (2/2)</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+import ax from 'laxar';
+import patterns from 'laxar-patterns';
+import shop from '../../../api';
+
+const injections = ['axContext'];
+function create(context) {
+    // ... products initialization (previous) ...
+
+    patterns.actions.handlerFor(context)
+        .registerActionsFromFeature('decrementInventory', ({ product }) => {
+            products
+                .filter(current => current.id == product.id)
+                .forEach(current => {
+                    current.inventory = Math.max(0, current.inventory - 1);
+                });
+            replaceProducts(products);
+        });
+}
+
+export default {
+    name: 'products-activity',
+    injections: injections,
+    create: create
+};
+</script>
+
+<div class="minimap">
+    <img src="slides/05_pubsub/images/pub-sub-topics-small-inverse-activities.svg">
+</div>
+
+
+<div class="slide-comment">
+- action handling similar to Flux stores
+- for async actions, perform async API calls here
+- when the internal state has changed, re-publish it
+  through the resource topic
+</div>

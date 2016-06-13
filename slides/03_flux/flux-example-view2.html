@@ -1,0 +1,52 @@
+<h3 class="lower-right-headline">Flux - Example - View (3/3)</h3>
+
+<pre class="stretch"><code class="language-jsx"></code></pre>
+<script type="text/template" class="jsx-example">
+var React = require('react');
+var FluxibleMixin = require('fluxible').FluxibleMixin;
+var ProductStore = require('./stores/ProductStore');
+var addToCart = require('./actions/addToCart');
+
+var Products = React.createClass({ /* ... */ });
+var ShoppingCart = require('./components/CartContainer.jsx');
+
+var App = React.createClass({
+    mixins: [FluxibleMixin],
+    render: function() {
+        return <div>
+                   <Products />
+                   <ShoppingCart />
+               </div>;
+    }
+});
+
+export function render(context) {
+    React.withContext(
+        context.getComponentContext(),
+        function() {
+            React.render(
+                React.createElement(App),
+                document.getElementById('fluxible-app')
+            );
+        }
+    );
+}
+</script>
+
+<div class="minimap">
+   <img src="slides/03_flux/images/flux-overview-small-inverse-view.svg">
+</div>
+
+
+<div class="slide-comment">
+ - Finally, we need to export a render method, which generates the DOM
+   for both product list and shopping cart, and puts it into the page.
+ - To group the components, a top-level App component is used.
+</div>
+<aside class="notes">
+    <ul>
+        <li>Und jetzt: Boilerplate!</li>
+        <li>Initialisierung, Aktualisierung</li>
+        <li>Beachte: Singleton-charakter der Stores</li>
+     </ul>
+</aside>
