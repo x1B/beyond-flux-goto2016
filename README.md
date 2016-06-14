@@ -1,8 +1,10 @@
 # Beyond Flux
 
-> Scalable front-end architecture using publish/subscribe
+> Scalable front-end architecture using publish/subscribe, talk given at [goto;amsterdam](http://gotocon.com/amsterdam-2016/) 2016
 
-- To view the slides (source under `./slides`):
+- The [PDF slides](beyond_flux.pdf) for download.
+
+- To view the original HTML slides (source under `./slides`):
 
 ```sh
 git clone https://github.com/x1B/beyond-flux-goto2016/
